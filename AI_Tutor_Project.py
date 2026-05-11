@@ -3,6 +3,7 @@ from streamlit_mic_recorder import mic_recorder
 import google.generativeai as genai
 from gtts import gTTS
 import io
+import re
 import extra_streamlit_components as stx
 import speech_recognition as sr
 from pydub import AudioSegment
@@ -171,6 +172,7 @@ def get_ai_response(user_text):
 def text_to_speech(text):
     if api_key:
         """Convert text to speech"""
+        text = re.sub(r"[\d,\.]","",text)
         tts = gTTS(text=text, lang="en")
         audio_fp = io.BytesIO()
         tts.write_to_fp(audio_fp)
