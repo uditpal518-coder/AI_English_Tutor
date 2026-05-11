@@ -5,3 +5,4 @@ gTTS
 SpeechRecognition
 pydub
 extra-streamlit-components
+re
