@@ -170,14 +170,30 @@ def get_ai_response(user_text):
 
 
 def text_to_speech(text):
-    if api_key:
-        """Convert text to speech"""
-        text = re.sub(r"[\d,\.]","",text)
-        tts = gTTS(text=text, lang="en")
-        audio_fp = io.BytesIO()
-        tts.write_to_fp(audio_fp)
-        audio_fp.seek(0)
-        return audio_fp
+    if api_key and text:
+        def text_to_speech(text):
+    """Convert text to speech"""
+    if api_key and text:
+        # Gemini ke markdown characters (* aur #) ko hatayein, 
+        # par comma (,) aur full stop (.) ko rehne dein taki AI naturally pause le sake.
+        clean_text = re.sub(r"[\d"*#]", "", text)
+        
+        # Extra spaces remove karein
+        clean_text = clean_text.strip()
+        
+        # Agar text completely empty ho gaya hai, toh wahi ruk jayein
+        if not clean_text:
+            return None
+            
+        try:
+            tts = gTTS(text=clean_text, lang="en")
+            audio_fp = io.BytesIO()
+            tts.write_to_fp(audio_fp)
+            audio_fp.seek(0)
+            return audio_fp
+        except Exception as e:
+            st.error(f"Audio generate karne mein error aayi: {e}")
+            return None
 
 
 # --- 3. UI LOGIC ---
