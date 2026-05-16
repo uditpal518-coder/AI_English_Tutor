@@ -174,7 +174,7 @@ def text_to_speech(text):
     if api_key and text:
         # Gemini ke markdown characters (* aur #) ko hatayein, 
         # par comma (,) aur full stop (.) ko rehne dein taki AI naturally pause le sake.
-        clean_text = re.sub(r"[\d"*#]", "", text)
+        clean_text = re.sub(r"[\d*#]", "", text)
         
         # Extra spaces remove karein
         clean_text = clean_text.strip()
