@@ -170,8 +170,6 @@ def get_ai_response(user_text):
 
 
 def text_to_speech(text):
-    if api_key and text:
-        def text_to_speech(text):
     """Convert text to speech"""
     if api_key and text:
         # Gemini ke markdown characters (* aur #) ko hatayein, 
