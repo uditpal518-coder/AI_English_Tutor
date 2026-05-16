@@ -138,35 +138,38 @@ def convert_audio_to_text(audio_bytes):
     except Exception as e:
         return f"Audio processing error: {str(e)}"
 
-
 def get_ai_response(user_text):
     """Get grammar correction and feedback from Gemini"""
     try:
-        
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        # Using the standard gemini-1.5-flash or your preferred model
+        model = genai.GenerativeModel("gemini-1.5-flash")
 
         prompt = f"""
-        You are a friendly English teacher.
+        You are a friendly and encouraging English teacher.
 
-        Student said: "{user_text}"
+        The student said: "{user_text}"
 
-        Please provide:
-        1. Corrected sentence
-        2. One simple explanation of the mistake
-        3. A short friendly reply to continue the conversation
+        Please analyze the sentence and provide feedback based on these two conditions:
 
-        Keep the response concise and easy to understand.
+        CONDITION 1 - IF THE SENTENCE HAS GRAMMAR MISTAKES:
+        1. Corrected sentence: (Provide the grammatically correct version)
+        2. Explanation: (Explain the grammar mistake simply. Strictly ignore basic punctuation rules like capital letters, commas, or full stops, because this is voice-to-text input.)
+        3. Reply: (A short friendly reply or question to continue the conversation)
+
+        CONDITION 2 - IF THE SENTENCE IS ALREADY CORRECT:
+        1. Praise: (Tell the student their grammar is perfectly correct!)
+        2. Better ways to say it: (Suggest 1 or 2 advanced, native-sounding, or more vocabulary-rich ways to say the exact same thing to help them improve.)
+        3. Reply: (A short friendly reply or question to continue the conversation)
+
+        Keep the response concise, well-formatted, and very easy to understand.
         """
 
         response = model.generate_content(prompt)
         return response.text
     
-
-    except:
-        return "Your API limit exceeded! You after few minutes.."
-    
-
+    except Exception as e:
+        return "⚠️ Error or API limit exceeded! Please try again after a few minutes."
 
 
 def text_to_speech(text):
