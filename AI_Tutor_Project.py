@@ -143,7 +143,7 @@ def get_ai_response(user_text):
     try:
         genai.configure(api_key=api_key)
         # Using the standard gemini-1.5-flash or your preferred model
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.5-flash")
 
         prompt = f"""
         You are a friendly and encouraging English teacher.
